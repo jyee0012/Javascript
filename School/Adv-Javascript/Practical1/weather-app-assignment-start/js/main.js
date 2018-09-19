@@ -3,70 +3,73 @@
  * best practices for JavaScript development.  The script makes use of the 
  * Yahoo! weather API.
  *
- * @param {object} $ - jQuery dependency (or compatible API such as zepto)
+ * param {object} $ - jQuery dependency (or compatible API such as zepto)
  */
-(function ($) {
-    'use strict';
+'use strict';
+/**
+ * Displays a weather forecast for a given location.
+ * @param {Object[]} data - The array of forecast weather objects.
+ * @param {Object} location - The document reference to the display DOM element.
+ */
+const displayForecast = (data, location) => {
+    let output = '<ul>',
+        i,
+        len;
 
-    /**
-     * Displays a weather forecast for a given location.
-     * @param {Object[]} data - The array of forecast weather objects.
-     * @param {Object} $el - The jQuery reference to the display DOM element.
-     */
-    function displayForecast(data, $el) {
-        let output = '<ul>',
-            i,
-            len;
-
-        for (i = 0, len = data.length; i < len; i += 1) {
-            output += `<li>${data[i].day} ${data[i].date}: hi| ${data[i].high}, low| ${data[i].low}</li>`;
-        }
-
-        output += '</ul>';
-
-        $el.html(output);
+    for (i = 0, len = data.length; i < len; i += 1) {
+        let {day, date, high, low} = data[i]; 
+        output += `<li>${day} ${date}: hi| ${high}, low| ${low}</li>`;
     }
 
-    /**
-     * Displays the current weather conditions for a given location.
-     * @param {Object} data - The weather data object.
-     * @param {Object} $el - The jQuery reference to the display DOM element.
-     * @param {boolean} showForecast - Whether to display the forecast or not
-     */
-    function displayWeather(data, $el, showForecast) {
-        const $loc = $el.find('.details>.location'),
-            $date = $el.find('.details>.date'),
-            $conditions = $el.find('.details>.conditions'),
-            $temp = $el.find('.details>.temp'),
-            $sunrise = $el.find('.details>.sunrise'),
-            $sunset = $el.find('.details>.sunset'),
-            $forecast = $el.find('.forecast');
+    output += '</ul>';
 
-        // display the current weather data
-        $loc.text(`${data.location.city},  ${data.location.region}`);
-        $date.text(data.lastBuildDate.split(' ').splice(0, 3).join(' '));
-        $conditions.text(data.item.condition.text);
-        $temp.text(data.item.condition.temp);
-        $sunrise.text(data.astronomy.sunrise);
-        $sunset.text(data.astronomy.sunset);
+    location.innerHTML = output;
+}
 
-        if (!!showForecast) {
-            // display the forecast
-            displayForecast(data.item.forecast, $forecast);
-        }
+/**
+ * Displays the current weather conditions for a given location.
+ * @param {Object} data - The weather data object.
+ * param {Object} el - The jQuery reference to the display DOM element.
+ * @param {boolean} showForecast - Whether to display the forecast or not
+ */
+const displayWeather = (data, showForecast) => {
+    const loc = document.querySelector('.details>.location'),
+        date = document.querySelector('.details>.date'),
+        conditions = document.querySelector('.details>.conditions'),
+        temp = document.querySelector('.details>.temp'),
+        sunrise = document.querySelector('.details>.sunrise'),
+        sunset = document.querySelector('.details>.sunset'),
+        forecast = document.querySelector('.forecast');
+
+    // display the current weather data
+    loc.innerHTML = (`${data.location.city},  ${data.location.region}`);
+    date.innerHTML = (data.lastBuildDate.split(' ').splice(0, 3).join(' '));
+    conditions.innerHTML = (data.item.condition.text);
+    temp.innerHTML = (data.item.condition.temp);
+    sunrise.innerHTML = (data.astronomy.sunrise);
+    sunset.innerHTML = (data.astronomy.sunset);
+
+    if (!!showForecast) {
+        // display the forecast
+        displayForecast(data.item.forecast, forecast);
     }
+}
+// Event listener for retrieving a weather forecast
+document.querySelector('.frm.weather').addEventListener('submit', (e) => {
+    e.preventDefault();
 
-    // Event listener for retrieving a weather forecast
-    $('.frm.weather').on('submit', function (e) {
-        e.preventDefault();
-
-        const location = $(e.target).find('[name=location]').val(),
-            query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="c"`,
-            endpoint = `https://query.yahooapis.com/v1/public/yql?q=${query}&format=json&env=store/datatables.org/alltableswithkeys`; 
-
-        $.getJSON(endpoint, function (data) {
-            data = data.query.results.channel;
-            displayWeather(data, $('.weather-display'), true);
-        });
+    const location = e.target.querySelector('[name=location]').value,
+        query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="c"`,
+        endpoint = `https://query.yahooapis.com/v1/public/yql?q=${query}&format=json&env=store/datatables.org/alltableswithkeys`; 
+    
+    let data, 
+        request = new XMLHttpRequest();
+    
+    request.open("get", endpoint, true);
+    request.addEventListener('load', function (evt) {
+    data = JSON.parse(request.responseText);
+    data = data.query.results.channel;
+    displayWeather(data, true);
     });
-}(jQuery));
+    request.send();
+});
