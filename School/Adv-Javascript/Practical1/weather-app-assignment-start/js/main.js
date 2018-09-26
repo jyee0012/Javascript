@@ -54,22 +54,68 @@ const displayWeather = (data, showForecast) => {
         displayForecast(data.item.forecast, forecast);
     }
 }
-// Event listener for retrieving a weather forecast
-document.querySelector('.frm.weather').addEventListener('submit', (e) => {
-    e.preventDefault();
+/**
+ * Send an AJAX request and return the result parsed as a JSON object
+ * @param {string} url - The URL for the desired resource.
+ * @returns {Promise} Promise represents the parsed JSON  
+ */
+const fetchJSON = (url) => {
+    return new Promise((resolve, reject) => {
+        let xhr = new XMLHttpRequest();
+        xhr.addEventListener('load', (evt) => {
+            switch (xhr.status) {
+                case 200:
+                    try {
+                        resolve(JSON.parse(xhr.response));
+                    } catch (err) {
+                        let e = new Error(`Could not parse result: ${err}.`);
+                        reject(e);
+                    }
+                    break;
+                default:
+                    reject(`Error retrieving user data: ${xhr.status} - ${xhr.statusText}.`);
+            }
+        });
+        xhr.addEventListener('error', (evt) => {
+            reject('Error retrieving user data.');
+        });
 
+        xhr.open('get', url);
+
+        xhr.send(null);
+    });
+
+};
+/**
+ * Retrieves weather data from yahoo API based on provided location text
+ * @param {Object} e - The event of submitting the form 
+ */
+const getWeatherData = (e = null) =>{
+    if (e == null) return;     
     const location = e.target.querySelector('[name=location]').value,
         query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="c"`,
         endpoint = `https://query.yahooapis.com/v1/public/yql?q=${query}&format=json&env=store/datatables.org/alltableswithkeys`; 
     
-    let data, 
-        request = new XMLHttpRequest();
+        // fetchJSON(endpoint)
+        fetch(endpoint)
+        .then(response =>{
+            if(response.ok) { 
+                return response.json();
+            }
+            else {
+                throw new Error(`Request Failed`);
+                // Promise.reject(`Request failed.`);
+            }
+        })
+
+        .then(data => {displayWeather(data.query.results.channel, true)})
+        .catch(err => {document.querySelector('.error-catch').innerHTML = err});
+};
+
+
+// Event listener for retrieving a weather forecast
+document.querySelector('.frm.weather').addEventListener('submit', (e) => {
+    e.preventDefault();
+    getWeatherData(e);
     
-    request.open("get", endpoint, true);
-    request.addEventListener('load', function (evt) {
-    data = JSON.parse(request.responseText);
-    data = data.query.results.channel;
-    displayWeather(data, true);
-    });
-    request.send();
 });
