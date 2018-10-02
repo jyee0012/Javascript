@@ -16,11 +16,13 @@
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0"
+    "@babel/preset-env": "^7.1.0",
+    "babel-plugin-iife-wrap": "^1.1.0"
   },
-  "babel":{
-    "presets":[
-      "@babel/present-env"
-    ]
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": ["iife-wrap"]
   }
 }
