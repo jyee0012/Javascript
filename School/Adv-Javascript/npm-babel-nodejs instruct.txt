@@ -1,0 +1,7 @@
+first init npm by using terminal and entering these commands
+npm init -y
+then install babel package using the babel docs usage first line
+
+then you are ready for babel, add package.json's presets 
+
+then add build script for the package.json
