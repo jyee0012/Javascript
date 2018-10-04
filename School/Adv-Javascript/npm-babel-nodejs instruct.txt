@@ -1,7 +1,13 @@
 first init npm by using terminal and entering these commands
 npm init -y
+
 then install babel package using the babel docs usage first line
+npm install --save-dev @babel/core @babel/cli @babel/preset-env
 
 then you are ready for babel, add package.json's presets 
+  "babel": {
+    "presets": ["@babel/preset-env"]
+    }
 
 then add build script for the package.json
+    "build": "npx babel js/main.js --out-dir dist"

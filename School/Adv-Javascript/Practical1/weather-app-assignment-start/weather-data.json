@@ -1,0 +1,54 @@
+{
+    "query": {
+        "results": {
+            "channel": {
+                "location": {
+                    "city": "Edmonton",
+                    "region": "AB"
+                },
+                "lastBuildDate": "Oct 03 2018 20:12:38 GMT-0600 (Mountain Daylight Time)",
+                "item": {
+                    "condition": {
+                        "temp": 4
+                    },
+                    "forecast": [
+                        {
+                            "day": "Thu",
+                            "date": "Oct 04 2018",
+                            "high": 7,
+                            "low": -3
+                        },
+                        {
+                            "day": "Fri",
+                            "date": "Oct 05 2018",
+                            "high": 9,
+                            "low": -2
+                        },
+                        {
+                            "day": "Sat",
+                            "date": "Oct 06 2018",
+                            "high": 9,
+                            "low": -1
+                        },
+                        {
+                            "day": "Sun",
+                            "date": "Oct 07 2018",
+                            "high": 2,
+                            "low": -3
+                        },
+                        {
+                            "day": "Mon",
+                            "date": "Oct 08 2018",
+                            "high": 1,
+                            "low": -2
+                        }
+                    ]
+                },
+                "astronomy": {
+                    "sunrise": "7:41 a.m.",
+                    "sunset": "7:05 p.m."
+                }
+            }
+        }
+    }
+}

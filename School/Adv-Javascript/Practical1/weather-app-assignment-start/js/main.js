@@ -81,7 +81,6 @@ const fetchJSON = (url) => {
         });
 
         xhr.open('get', url);
-
         xhr.send(null);
     });
 
@@ -95,7 +94,6 @@ const getWeatherData = (e = null) =>{
     const location = e.target.querySelector('[name=location]').value,
         query = `select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="${location}") and u="c"`,
         endpoint = `https://query.yahooapis.com/v1/public/yql?q=${query}&format=json&env=store/datatables.org/alltableswithkeys`; 
-    
         // fetchJSON(endpoint)
         fetch(endpoint)
         .then(response =>{
@@ -116,6 +114,13 @@ const getWeatherData = (e = null) =>{
 // Event listener for retrieving a weather forecast
 document.querySelector('.frm.weather').addEventListener('submit', (e) => {
     e.preventDefault();
-    getWeatherData(e);
-    
+    let useAPI = false;
+    if (useAPI) {
+        getWeatherData(e);
+    }
+    else {
+        fetchJSON("weather-data.json")
+        .then(data => {displayWeather(data.query.results.channel, true)})
+        .catch(err => {document.querySelector('.error-catch').innerHTML = err});
+    }
 });
