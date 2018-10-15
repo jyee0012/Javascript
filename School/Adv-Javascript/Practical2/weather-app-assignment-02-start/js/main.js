@@ -68,8 +68,10 @@
       return data.json();
     }) // see Response.json() in the Fetch API spec
     .then(function (json) {
-      json = json.query.results.channel;
-      displayWeather(json, document.querySelector('.weather-display'), true);
+      json = json.query.results.channel; //console.log(json);
+      //displayWeather(json, document.querySelector('.weather-display'), true);
+
+      document.querySelector('.weather-display').innerHTML = Handlebars.templates['projects'](json[0]);
     });
   });
 })();

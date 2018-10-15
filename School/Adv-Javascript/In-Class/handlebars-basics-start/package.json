@@ -7,7 +7,8 @@
   },
   "scripts": {
     "compile": "npx babel js/src --out-dir js/dist",
-    "watch": "npx babel js/src --watch --out-dir js/dist"
+    "watch": "npx babel js/src --watch --out-dir js/dist",
+    "handlebars-compile": "npx handlebars js/src/template/project.handlebars -f js/dist/project-template.js"
   },
   "keywords": [],
   "author": "",

@@ -1,6 +1,3 @@
-let source = document.querySelector("#project-template").innerHTML;
-let template = Handlebars.compile(source);
-
 Handlebars.registerHelper('currency', (value) => {
   return value.toLocaleString('en-US', {
     style: 'currency',
@@ -9,7 +6,7 @@ Handlebars.registerHelper('currency', (value) => {
 });
 
 const renderProject = (proj) => {
-  document.querySelector('.project').innerHTML = template(proj);
+  document.querySelector('.project').innerHTML = Handlebars.templates['project'](proj);
 };
 
 // now, fetch projects and render the first one.

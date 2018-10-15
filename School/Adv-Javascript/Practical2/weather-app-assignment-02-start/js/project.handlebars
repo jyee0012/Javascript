@@ -1,0 +1,16 @@
+  <section class="weather-display">
+      <h1>Weather Update</h1>
+      <div class="details">Location: <span class="location">{{location.city}}, {{location.region}}</span></div>
+      <div class="details">Date: <span class="date">{{lastBuildDate.split(' ').splice(0, 3).join(' ')}}</span></div>
+      <div class="details">Conditions: <span class="conditions">{{item.condition.text}}</span></div>
+      <div class="details">Current Temp: <span class="temp">{{item.condition.temp}}</span></div>
+      <div class="details">Sunrise: <span class="sunrise">{{astronomy.sunrise}}</span></div>
+      <div class="details">Sunset: <span class="sunset">{{astronomy.sunset}}</span></div>
+      <div class="forecast">
+          <ul>
+              {{#each item.forecast}}
+                <li>{{day}} {{date}} : hi| {{high}} , low| {{low}}</li>
+              {{/each}}
+          </ul>
+      </div>
+  </section>

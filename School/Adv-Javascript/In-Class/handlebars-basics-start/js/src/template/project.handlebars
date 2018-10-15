@@ -1,0 +1,28 @@
+    <h2 class="project-title">Project: <span class="title">{{title}}</span></h2>
+    <section class="details">
+      <h3>Details</h3>
+      <ul>
+        <li>Project Start - <span class="start">{{startDate}}</span></li>
+        <li>Project End - <span class="end">{{endDate}}</span></li>
+        <!-- use helper to format as currency -->
+        <li>Estimated Budget - <span class="budget">{{currency budget}}</span></li>
+      </ul>
+      <section>
+        <h4>Project Managers</h4>
+        <table class="tbl-managers">
+          <thead>
+            <tr><th>Name</th><th>Position</th><th>Experience</th></tr>
+          </thead>
+          <tbody>
+            {{#each managers}}
+            <tr>
+              <td>{{name}}</td>
+              <td>{{position}}</td>
+              <td>{{experience}}</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </section>
+    </section>
+    <!-- <h1>Hello {{name}}!</h1> -->

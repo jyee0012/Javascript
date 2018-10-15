@@ -27,24 +27,34 @@
     <input type="text" id="location" name="location">
     <button type="submit">Get Weather</button>
   </form>
-
-  <section class="weather-display">
-      <h1>Weather Update</h1>
-      <div class="details">Location: <span class="location"></span></div>
-      <div class="details">Date: <span class="date"></span></div>
-      <div class="details">Conditions: <span class="conditions"></span></div>
-      <div class="details">Current Temp: <span class="temp"></span></div>
-      <div class="details">Sunrise: <span class="sunrise"></span></div>
-      <div class="details">Sunset: <span class="sunset"></span></div>
-      <div class="forecast"></div>
-  </section>
   
+  <script id="project-template" type="text/x-handlebars-template">
+    <section class="weather-display">
+      <h1>Weather Update</h1>
+      <div class="details">Location: <span class="location">{{location.city}}, {{location.region}}</span></div>
+      <div class="details">Date: <span class="date">{{lastBuildDate.split(' ').splice(0, 3).join(' ')}}</span></div>
+      <div class="details">Conditions: <span class="conditions">{{item.condition.text}}</span></div>
+      <div class="details">Current Temp: <span class="temp">{{item.condition.temp}}</span></div>
+      <div class="details">Sunrise: <span class="sunrise">{{astronomy.sunrise}}</span></div>
+      <div class="details">Sunset: <span class="sunset">{{astronomy.sunset}}</span></div>
+      <div class="forecast">
+          <ul>
+              {{#each item.forecast}}
+                <li>{{day}} {{date}} : hi| {{high}} , low| {{low}}</li>
+              {{/each}}
+          </ul>
+      </div>
+  </section>
+  </script>
   <script src="js/vendor/modernizr-3.6.0.min.js"></script>
   <script src="js/vendor/handlebars.runtime-v4.0.12.js"></script>
-  <script src="js/vendor/handlebars-v4.0.12.js"></script>
+  <!-- <script src="js/vendor/handlebars-v4.0.12.js"></script> -->
+  <script src="js/project-template.js"></script>
+
   <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
-  --><script src="js/plugins.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>-->
+
+  <script src="js/plugins.js"></script>
   <script src="js/main.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

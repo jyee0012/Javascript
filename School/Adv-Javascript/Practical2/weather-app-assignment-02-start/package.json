@@ -7,7 +7,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npx babel js/main.es6.js --out-file js/main.js"
+    "build": "npx babel js/main.es6.js --out-file js/main.js",
+    "watch": "npx babel js/main.es6.js --watch --out-dir js/main.js",
+    "handlebars-compile": "npx handlebars js/project.handlebars -f js/project-template.js"
   },
   "keywords": [],
   "author": "",

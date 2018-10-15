@@ -62,6 +62,8 @@ document.querySelector('.frm.weather').addEventListener('submit', (e) => {
         .then(data => data.json()) // see Response.json() in the Fetch API spec
         .then(json => {
             json = json.query.results.channel;
-            displayWeather(json, document.querySelector('.weather-display'), true);
+            //console.log(json);
+            //displayWeather(json, document.querySelector('.weather-display'), true);
+            document.querySelector('.weather-display').innerHTML = Handlebars.templates['projects'](json[0]);
     });
 });
