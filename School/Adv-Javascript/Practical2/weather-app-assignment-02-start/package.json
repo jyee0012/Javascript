@@ -1,7 +1,6 @@
 {
   "name": "weather-app-assignment-end",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "directories": {
     "doc": "doc"
@@ -14,10 +13,11 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.0.0",
-    "@babel/core": "^7.0.0",
-    "@babel/preset-env": "^7.0.0",
-    "babel-plugin-iife-wrap": "^1.1.0"
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-plugin-iife-wrap": "^1.1.0",
+    "handlebars": "^4.0.12"
   },
   "babel": {
     "presets": [
@@ -26,5 +26,7 @@
     "plugins": [
       "iife-wrap"
     ]
-  }
+  },
+  "dependencies": {},
+  "description": ""
 }
