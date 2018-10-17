@@ -29,26 +29,7 @@ const displayForecast = (data, el) => {
  * @param {boolean} showForecast - Whether to display the forecast or not
  */
 const displayWeather = (data, el, showForecast) => {
-    let loc = el.querySelector('.details>.location'),
-        date = el.querySelector('.details>.date'),
-        conditions = el.querySelector('.details>.conditions'),
-        temp = el.querySelector('.details>.temp'),
-        sunrise = el.querySelector('.details>.sunrise'),
-        sunset = el.querySelector('.details>.sunset'),
-        forecast = el.querySelector('.forecast');
-
-    // display the current weather data
-    loc.innerHTML = `${data.location.city}, ${data.location.region}`;
-    date.innerHTML = data.lastBuildDate.split(' ').splice(0, 3).join(' ');
-    conditions.innerHTML = data.item.condition.text;
-    temp.innerHTML = data.item.condition.temp;
-    sunrise.innerHTML = data.astronomy.sunrise;
-    sunset.innerHTML = data.astronomy.sunset;
-
-    if (!!showForecast) {
-        // display the forecast
-        displayForecast(data.item.forecast, forecast);
-    }
+    el.innerHTML = Handlebars.templates['project'](data);
 };
 
 // Event listener for retrieving a weather forecast
@@ -63,7 +44,7 @@ document.querySelector('.frm.weather').addEventListener('submit', (e) => {
         .then(json => {
             json = json.query.results.channel;
             //console.log(json);
-            //displayWeather(json, document.querySelector('.weather-display'), true);
-            document.querySelector('.weather-display').innerHTML = Handlebars.templates['projects'](json[0]);
+            displayWeather(json, document.querySelector('.weather-display'));
+            //document.querySelector('.weather-display').innerHTML = Handlebars.templates['projects'](json[0]);
     });
 });

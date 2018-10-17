@@ -38,25 +38,7 @@
 
 
   var displayWeather = function displayWeather(data, el, showForecast) {
-    var loc = el.querySelector('.details>.location'),
-        date = el.querySelector('.details>.date'),
-        conditions = el.querySelector('.details>.conditions'),
-        temp = el.querySelector('.details>.temp'),
-        sunrise = el.querySelector('.details>.sunrise'),
-        sunset = el.querySelector('.details>.sunset'),
-        forecast = el.querySelector('.forecast'); // display the current weather data
-
-    loc.innerHTML = "".concat(data.location.city, ", ").concat(data.location.region);
-    date.innerHTML = data.lastBuildDate.split(' ').splice(0, 3).join(' ');
-    conditions.innerHTML = data.item.condition.text;
-    temp.innerHTML = data.item.condition.temp;
-    sunrise.innerHTML = data.astronomy.sunrise;
-    sunset.innerHTML = data.astronomy.sunset;
-
-    if (!!showForecast) {
-      // display the forecast
-      displayForecast(data.item.forecast, forecast);
-    }
+    el.innerHTML = Handlebars.templates['project'](data);
   }; // Event listener for retrieving a weather forecast
 
 
@@ -69,9 +51,8 @@
     }) // see Response.json() in the Fetch API spec
     .then(function (json) {
       json = json.query.results.channel; //console.log(json);
-      //displayWeather(json, document.querySelector('.weather-display'), true);
 
-      document.querySelector('.weather-display').innerHTML = Handlebars.templates['projects'](json[0]);
+      displayWeather(json, document.querySelector('.weather-display')); //document.querySelector('.weather-display').innerHTML = Handlebars.templates['projects'](json[0]);
     });
   });
 })();

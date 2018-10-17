@@ -14,6 +14,8 @@
 
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet/less" type="text/css" href="less/main.less" />
+  <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js" ></script>
 </head>
 
 <body>
@@ -28,23 +30,16 @@
     <button type="submit">Get Weather</button>
   </form>
   
-  <script id="project-template" type="text/x-handlebars-template">
-    <section class="weather-display">
+  <section class="weather-display">
       <h1>Weather Update</h1>
-      <div class="details">Location: <span class="location">{{location.city}}, {{location.region}}</span></div>
-      <div class="details">Date: <span class="date">{{lastBuildDate.split(' ').splice(0, 3).join(' ')}}</span></div>
-      <div class="details">Conditions: <span class="conditions">{{item.condition.text}}</span></div>
-      <div class="details">Current Temp: <span class="temp">{{item.condition.temp}}</span></div>
-      <div class="details">Sunrise: <span class="sunrise">{{astronomy.sunrise}}</span></div>
-      <div class="details">Sunset: <span class="sunset">{{astronomy.sunset}}</span></div>
-      <div class="forecast">
-          <ul>
-              {{#each item.forecast}}
-                <li>{{day}} {{date}} : hi| {{high}} , low| {{low}}</li>
-              {{/each}}
-          </ul>
-      </div>
+      <div class="details">Location:</div>
+      <div class="details">Date:</div>
+      <div class="details">Conditions:</div>
+      <div class="details">Current Temp:</div>
+      <div class="details">Sunrise:</div>
+      <div class="details">Sunset:</div>
   </section>
+ 
   </script>
   <script src="js/vendor/modernizr-3.6.0.min.js"></script>
   <script src="js/vendor/handlebars.runtime-v4.0.12.js"></script>

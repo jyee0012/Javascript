@@ -8,7 +8,9 @@
   "scripts": {
     "compile": "npx babel js/src --out-dir js/dist",
     "watch": "npx babel js/src --watch --out-dir js/dist",
-    "handlebars-compile": "npx handlebars js/src/template/project.handlebars -f js/dist/project-template.js"
+    "handlebars-compile": "npx handlebars js/src/template/project.handlebars -f js/dist/project-template.js",
+    "less-compile": "npx lessc less/main.less css/main.css",
+    "build": "npm run-script less-compile && npm run-script handlebars-compile && npm run-script compile"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +19,8 @@
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
     "@babel/preset-env": "^7.1.0",
-    "handlebars": "^4.0.12"
+    "handlebars": "^4.0.12",
+    "less": "^3.8.1"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0"
