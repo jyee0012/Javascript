@@ -12,9 +12,9 @@
   <link rel="apple-touch-icon" href="icon.png">
   <!-- Place favicon.ico in the root directory -->
 
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet/less" type="text/css" href="less/main.less" />
+  <link rel="stylesheet" href="dist/css/normalize.css">
+  <link rel="stylesheet" href="dist/css/main.css">
+  <!-- <link rel="stylesheet/less" type="text/css" href="less/main.less" /> -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.7.1/less.min.js" ></script>
 </head>
 
@@ -28,6 +28,10 @@
     <label for="location">Location</label>
     <input type="text" id="location" name="location">
     <button type="submit">Get Weather</button>
+    <div class="temp-radio" style="display: inline-block; margin-left: 1rem;">
+      <input type="radio" name="temperature" value="c" checked >Celsius</input>
+      <input type="radio" name="temperature" value="f">Fahrenheit</input>
+    </div>
   </form>
   
   <section class="weather-display">
@@ -41,16 +45,16 @@
   </section>
  
   </script>
-  <script src="js/vendor/modernizr-3.6.0.min.js"></script>
-  <script src="js/vendor/handlebars.runtime-v4.0.12.js"></script>
+  <script src="dist/js/vendor/modernizr-3.6.0.min.js"></script>
+  <script src="dist/js/vendor/handlebars.runtime-v4.0.12.js"></script>
   <!-- <script src="js/vendor/handlebars-v4.0.12.js"></script> -->
-  <script src="js/project-template.js"></script>
+  <script src="dist/js/project-template.js"></script>
 
   <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>-->
 
-  <script src="js/plugins.js"></script>
-  <script src="js/main.js"></script>
+  <script src="dist/js/plugins.js"></script>
+  <script src="dist/js/main.js"></script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>

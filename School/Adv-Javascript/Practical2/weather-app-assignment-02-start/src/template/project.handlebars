@@ -2,13 +2,13 @@
       <div class="details">Location: <span class="location">{{location.city}}, {{location.region}}</span></div>
       <div class="details">Date: <span class="date">{{lastBuildDate}}</span></div>
       <div class="details">Conditions: <span class="conditions">{{item.condition.text}}</span></div>
-      <div class="details">Current Temp: <span class="temp">{{item.condition.temp}}&#176C</span></div>
+      <div class="details">Current Temp: <span class="temp">{{temperature item.condition.temp}}</span></div>
       <div class="details">Sunrise: <span class="sunrise">{{astronomy.sunrise}}</span></div>
       <div class="details">Sunset: <span class="sunset">{{astronomy.sunset}}</span></div>
       <div class="forecast">
           <ul>
               {{#each item.forecast}}
-                <li><span class="week-day">{{day}}</span> {{date}} : hi| {{high}}&#176C , low| {{low}}&#176C</li>
+                <li><span class="week-day">{{day}}</span> {{date}} : hi| {{temperature high}} , low| {{temperature low}}</li>
               {{/each}}
           </ul>
       </div>

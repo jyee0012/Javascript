@@ -39,13 +39,34 @@
 
   var displayWeather = function displayWeather(data, el, showForecast) {
     el.innerHTML = Handlebars.templates['project'](data);
-  }; // Event listener for retrieving a weather forecast
+  };
+  /**
+   * Setup Register Helper from Handlebars for temperature
+   */
 
+
+  var tempVar = 'c';
+  Handlebars.registerHelper('temperature', function (value) {
+    if (tempVar == 'c') {
+      return value + '°C'; // &#176 == °
+    } else {
+      return value + '°F';
+    }
+  });
+  Handlebars.registerPartial('forecastPartial', '{{day}} {{date}} : hi| {{high}} , low| {{low}}'); // Event listener for retrieving a weather forecast
 
   document.querySelector('.frm.weather').addEventListener('submit', function (e) {
     e.preventDefault();
+    var tempRadios = document.getElementsByName('temperature');
+
+    for (var i = 0; i < tempRadios.length; i++) {
+      if (tempRadios[i].checked) {
+        tempVar = tempRadios[i].value;
+      }
+    }
+
     var location = e.target.querySelector('[name=location]').value,
-        query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"c\"&format=json&env=store/datatables.org/alltableswithkeys");
+        query = "select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"".concat(location, "\") and u=\"").concat(tempVar, "\"&format=json&env=store/datatables.org/alltableswithkeys");
     fetch("https://query.yahooapis.com/v1/public/yql?q=".concat(query)).then(function (data) {
       return data.json();
     }) // see Response.json() in the Fetch API spec

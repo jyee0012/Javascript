@@ -1,0 +1,17 @@
+[{
+  "title": "Project 1",
+  "startDate": "Sep-03-18",
+  "endDate": "Jan-17-19",
+  "budget": 127890,
+  "managers": [{
+      "name": "Jane Doe",
+      "position": "Senior Project Manager",
+      "experience": 14
+    },
+    {
+      "name": "Sally Anne",
+      "position": "Project Manager",
+      "experience": 8
+    }
+  ]
+}]
