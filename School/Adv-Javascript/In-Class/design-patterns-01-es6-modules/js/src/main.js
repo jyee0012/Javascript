@@ -4,14 +4,16 @@
 
 // import * as events from './events.js';
 // import {helloWorld} from './events.js'; // where helloWorld is exported as a const/function only
-import helloWorld from './events.js'; // where helloWorld is exported as a default
+// import helloWorld from './events.js'; // where helloWorld is exported as a default
 
 // events.helloWorld(); // for line 3
-helloWorld();
+// helloWorld();
+
+import Events from './events.js';
 
 import Loan from './loan.js';
-let loan = [];
+let loans = [];
 for (let i =0; i < 5; i++){
     loans[i] = new Loan();
 }
-window.loan  = loan;
+window.loans  = loans;

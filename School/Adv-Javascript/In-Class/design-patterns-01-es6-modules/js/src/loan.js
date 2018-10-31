@@ -1,8 +1,13 @@
-const Loan = function () {
+const Loan = function (attrs) {
     this.title = '';
     this.principal = 0.0;
     this.rate = 0.0;
     this.term = 0;
+    if (attrs) {
+        for (let attr in attrs) {
+            this[attr] = attrs[attr];
+        }
+    }
 };
 
 Loan.prototype.get = function (attr) {
