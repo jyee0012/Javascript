@@ -25,5 +25,6 @@ Events.prototype.off = function () {
 
 };
 
+
 export default Events;
 window.Events = Events;

@@ -16,6 +16,7 @@ Loan.prototype.get = function (attr) {
 
 Loan.prototype.set = function (attr, value) {
     this[attr] = value;
+    this.trigger('change');
 };
 
 Loan.prototype.payment = function () {
