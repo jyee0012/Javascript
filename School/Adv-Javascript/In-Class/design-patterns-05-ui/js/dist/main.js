@@ -10,9 +10,9 @@ import Loan from './loan.js'; // Connect the UI to the data.
 // (e.g. display Add to create and Save to make changes)
 
 var form = document.querySelector('.loan-control>form'),
-    // form access via jQuery
+    // form access via
 list = document.querySelector('.loan-display>.list-group'),
-    // list access via jQuery
+    // list access via
 loans = [],
     // array to store Loan objects
 currentLoan,
@@ -85,8 +85,8 @@ renderLoansList = function renderLoansList() {
 }; // add observable support to the loans array
 
 
-for (prop in Events.prototype) {
-  loans[prop] = Events.prototype[prop];
+for (var _prop in Events.prototype) {
+  loans[_prop] = Events.prototype[_prop];
 } // update the push method of the loans array so that it now triggers a 'change' event
 
 
@@ -104,4 +104,3 @@ loans.on('change', renderLoansList);
 list.addEventListener('click', handleListClick);
 form.addEventListener('submit', handleSubmit);
 form.querySelector('button[type=reset]').addEventListener('click', handleResetClick);
-window.loans = loans;

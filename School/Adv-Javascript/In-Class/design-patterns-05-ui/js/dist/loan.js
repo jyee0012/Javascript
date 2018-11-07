@@ -41,6 +41,7 @@ for (var prop in Events.prototype) {
 
 Loan.prototype.set = function (attr, value) {
   this[attr] = value;
+  this.trigger('change');
 };
 /**
  * Used to get a specific property of a loan
