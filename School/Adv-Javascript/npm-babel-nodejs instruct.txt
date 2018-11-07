@@ -11,3 +11,14 @@ then you are ready for babel, add package.json's presets
 
 then add build script for the package.json
     "build": "npx babel js/main.js --out-dir dist"
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+
+
+
+If your package.json exists and has dependencies then just do an "npm install" to retrieve all the packages the user uses
