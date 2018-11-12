@@ -69,7 +69,9 @@ Loan.prototype.payment = function () {
 };
 
 Loan.prototype.cost = function () {
-
+    return ( 
+        (this.rate * this.principal * this.term * 12) / (1 - Math.pow(1 + this.rate / 12, -this.term * 12))
+    ).toFixed(2);
 };
 // export Loan for global useage
 export default Loan;

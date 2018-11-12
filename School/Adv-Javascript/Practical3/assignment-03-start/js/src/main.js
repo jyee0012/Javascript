@@ -59,6 +59,7 @@ let form = document.querySelector('.loan-control>form'), // form access via
 
             // display the payment
             form.querySelector('#loan-payment').innerHTML = `$${currentLoan.payment()}`;
+            form.querySelector('#loan-cost').innerHTML = `$${currentLoan.cost()}`;
 
         }
 
