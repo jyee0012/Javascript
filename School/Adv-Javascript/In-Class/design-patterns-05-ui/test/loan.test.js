@@ -1,5 +1,6 @@
 import Loan from '../js/dist/loan';
 import {expect} from 'chai';
+import sinon from 'sinon';
 
 // var expect = require('chai').expect;
 let loan = null;
@@ -37,8 +38,12 @@ describe('Test', function () {
                 loan.set('term', 1);
                 expect(loan.term).to.equal(1);
             });
-            it.skip('should trigger \'change\' event', function () {
+            it('should trigger \'change\' event', function () {
                 // how can we test this? .. later
+                // let triggerSpy = sinon.stub(loan, 'trigger');
+                let triggerSpy = loan.trigger = sinon.spy();
+                loan.set('term', 1);
+                expect(triggerSpy.calledWith('change')).to.equal(true);
             });
         });
         describe('#get()', function () {

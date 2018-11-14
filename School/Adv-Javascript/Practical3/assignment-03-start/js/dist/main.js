@@ -34,7 +34,9 @@ handleSubmit = function handleSubmit(e) {
       term: +form.querySelector('#loan-term').value
     }); // display the payment
 
-    form.querySelector('#loan-payment').innerHTML = "$".concat(currentLoan.payment()); // the loans list should update its display whenever a loan is changed
+    form.querySelector('#loan-payment').innerHTML = "$".concat(currentLoan.payment()); // display the cost
+
+    form.querySelector('#loan-cost').innerHTML = "$".concat(currentLoan.cost()); // the loans list should update its display whenever a loan is changed
 
     currentLoan.on('change', renderLoansList); // add the loan to the list, which should also trigger the 'change' event
 
@@ -50,6 +52,7 @@ handleSubmit = function handleSubmit(e) {
     currentLoan.set('term', +form.querySelector('#loan-term').value); // display the payment
 
     form.querySelector('#loan-payment').innerHTML = "$".concat(currentLoan.payment());
+    form.querySelector('#loan-cost').innerHTML = "$".concat(currentLoan.cost());
   }
 
   e.preventDefault();
@@ -58,6 +61,7 @@ handleSubmit = function handleSubmit(e) {
 handleResetClick = function handleResetClick(e) {
   currentLoan = undefined;
   form.querySelector('#loan-payment').innerHTML = '$0.00';
+  form.querySelector('#loan-cost').innerHTML = '$0.00';
   form.querySelector('button[type=submit]').innerHTML = 'Add';
 },
     // list click handler
@@ -69,9 +73,10 @@ handleListClick = function handleListClick(e) {
     form.querySelector('#loan-title').value = currentLoan.get('title');
     form.querySelector('#loan-principal').value = currentLoan.get('principal');
     form.querySelector('#loan-rate').value = currentLoan.get('rate') * 100;
-    form.querySelector('#loan-term').value = currentLoan.get('term'); // display the payment
+    form.querySelector('#loan-term').value = currentLoan.get('term'); // display the payment & cost
 
-    form.querySelector('#loan-payment').innerHTML = "$".concat(currentLoan.payment()); // update the submit button
+    form.querySelector('#loan-payment').innerHTML = "$".concat(currentLoan.payment());
+    form.querySelector('#loan-cost').innerHTML = "$".concat(currentLoan.cost()); // update the submit button
 
     form.querySelector('button[type=submit]').innerHTML = 'Save';
   }

@@ -30,7 +30,7 @@ for (var prop in Events.prototype) {
 // use prototype to manage memory consumption
 
 /**
- * Used to set a specific property of a loan
+ * Used to set a specific property of a loan. Will trigger the 'change' event
  * @function
  * @name set
  * @param {string} attr - the name of the property to set
@@ -65,6 +65,10 @@ Loan.prototype.get = function (attr) {
 
 Loan.prototype.payment = function () {
   return +(this.principal * this.rate / 12 / (1 - Math.pow(1 + this.rate / 12, -this.term * 12))).toFixed(2);
+};
+
+Loan.prototype.cost = function () {
+  return +(this.principal * this.rate / 12 / (1 - Math.pow(1 + this.rate / 12, -this.term * 12)) * (this.term * 12)).toFixed(2);
 }; // export Loan for global useage
 
 

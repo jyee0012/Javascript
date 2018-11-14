@@ -73,11 +73,17 @@ describe('Loan', function() {
     });
     // add cost() function test here ...
     describe('#cost()', function () {
-        it('should return current cost amount based off formula', function () {
+        it('should return current cost amount based off formula test 1', function () {
             l.principal = 1000;
             l.term = 1;
             l.rate = 0.05;
-            expect(l.cost()).to.be.within(27.28, 27.30);
+            expect(l.cost()).to.be.within(1027.28, 1027.30);
+        });
+        it('should return current cost amount based off formula test 2', function () {
+            l.principal = 20000;
+            l.term = 12;
+            l.rate = 0.08;
+            expect(l.cost()).to.be.within(31174.62, 31174.64);
         });
     });
 });

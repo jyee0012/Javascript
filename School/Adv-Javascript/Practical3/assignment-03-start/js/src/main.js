@@ -70,6 +70,7 @@ let form = document.querySelector('.loan-control>form'), // form access via
     handleResetClick = (e) => {
         currentLoan = undefined;
         form.querySelector('#loan-payment').innerHTML = '$0.00';
+        form.querySelector('#loan-cost').innerHTML = '$0.00';
         form.querySelector('button[type=submit]').innerHTML = 'Add';
     },
 
@@ -85,8 +86,9 @@ let form = document.querySelector('.loan-control>form'), // form access via
             form.querySelector('#loan-rate').value = currentLoan.get('rate') * 100;
             form.querySelector('#loan-term').value = currentLoan.get('term');
 
-            // display the payment
+            // display the payment & cost
             form.querySelector('#loan-payment').innerHTML = `$${currentLoan.payment()}`;
+            form.querySelector('#loan-cost').innerHTML = `$${currentLoan.cost()}`;
 
             // update the submit button
             form.querySelector('button[type=submit]').innerHTML = 'Save';

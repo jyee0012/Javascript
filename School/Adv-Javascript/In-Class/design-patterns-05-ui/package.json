@@ -10,7 +10,8 @@
     "compile": "npx babel js/src --out-dir js/dist",
     "watch": "npx babel js/src --watch --out-dir js/dist",
     "handlebars": "npx handlebars js/src/templates/loans.handlebars -f js/dist/loans.template.js",
-    "build": "npm run-script compile && npm run-script handlebars"
+    "build": "npm run-script compile && npm run-script handlebars",
+    "test": "npm run-script compile && npx mocha -r esm"
   },
   "keywords": [],
   "author": "",
@@ -22,7 +23,8 @@
     "chai": "^4.2.0",
     "esm": "^3.0.84",
     "handlebars": "^4.0.12",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "sinon": "^7.1.1"
   },
   "babel": {
     "presets": [
