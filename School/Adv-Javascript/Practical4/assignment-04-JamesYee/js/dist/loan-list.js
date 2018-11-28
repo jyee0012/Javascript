@@ -8,13 +8,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 // LoanList Component
 var LoanList =
@@ -22,15 +22,37 @@ var LoanList =
 function (_React$Component) {
   _inherits(LoanList, _React$Component);
 
-  function LoanList() {
+  function LoanList(props) {
+    var _this;
+
     _classCallCheck(this, LoanList);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(LoanList).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(LoanList).call(this, props));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
 
   _createClass(LoanList, [{
+    key: "handleClick",
+    value: function handleClick(evt) {
+      console.log("Click da button......".concat(evt.target.dataset.idx));
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange() {
+      this.forceUpdate();
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      this.props.loans.on('change', this.handleChange);
+    }
+  }, {
     key: "render",
     value: function render(loan) {
+      var _this2 = this;
+
       // <button type="button" class="list-group-item" data-idx="{{idx}}">{{title}}</button> 
       var loanListBtn;
 
@@ -40,14 +62,18 @@ function (_React$Component) {
           className: "list-group-item"
         }, "No Loans Entered");
       } else {
-        this.props.loans.map(function (loan, idx) {
-          loanListBtn = React.createElement("button", {
+        // loanListBtn = <button key={idx} onClick={this.handleClick} type="button" className="list-group-item" data-idx={idx}>{loan.get('title')}</button>
+        return React.createElement("div", null, React.createElement("h3", null, "Loan List"), React.createElement("div", {
+          className: "list-group"
+        }, this.props.loans.map(function (loan, idx) {
+          return React.createElement("button", {
             key: idx,
+            onClick: _this2.handleClick,
             type: "button",
             className: "list-group-item",
-            "data-idx": "{{idx}}"
+            "data-idx": idx
           }, loan.get('title'));
-        });
+        })));
       }
 
       return React.createElement("div", null, React.createElement("h3", null, "Loan List"), React.createElement("div", {

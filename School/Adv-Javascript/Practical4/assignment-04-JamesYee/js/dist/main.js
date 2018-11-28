@@ -1,6 +1,7 @@
 import Events from './events.js';
 import Loan from './loan.js';
-import LoanList from './loan-list.js'; // Connect the UI to the data.
+import LoanList from './loan-list.js';
+import LoanForm from './loan-form.js'; // Connect the UI to the data.
 // There are three actions to consider:
 // a) the user creates a new loan by filling the form and clicking 'Add'
 // b) the user chooses to view/edit an existing loan by clicking on one in the list
@@ -110,9 +111,19 @@ loans.push = function (loan) {
 
 
 loans.push(new Loan({
-  title: 'New Loan Title'
+  title: 'New Loan Title 1'
 }));
+loans.push(new Loan({
+  title: 'New Loan Title 2'
+}));
+loans.push(new Loan({
+  title: 'New Loan Title 3'
+}));
+window.loans = loans;
+window.Loan = Loan;
 var listRenderDOM = document.querySelector('.loan-display');
 ReactDOM.render(React.createElement(LoanList, {
   loans: loans
 }), listRenderDOM);
+var formRenderDOM = document.querySelector('.loan-control');
+ReactDOM.render(React.createElement(LoanForm, null), formRenderDOM);
