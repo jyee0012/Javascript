@@ -37,6 +37,7 @@ function (_React$Component) {
     key: "handleClick",
     value: function handleClick(evt) {
       console.log("Click da button......".concat(evt.target.dataset.idx));
+      this.props.clickLisener(evt.target.dataset.idx);
     }
   }, {
     key: "handleChange",

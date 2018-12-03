@@ -8,13 +8,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+import Loan from "./loan.js";
 
 var LoanForm =
 /*#__PURE__*/
@@ -22,10 +24,40 @@ function (_React$Component) {
   _inherits(LoanForm, _React$Component);
 
   function LoanForm(props) {
+    var _this;
+
     _classCallCheck(this, LoanForm);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(LoanForm).call(this, props)); // bind handlers/methods
-    // set state
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(LoanForm).call(this, props)); // this.state = {value: ''};
+    // bind handlers/methods
+
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleReset = _this.handleReset.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this))); // set state
+
+    if (_this.props.loan) {
+      _this.state = {
+        title: _this.props.loan.title,
+        principle: _this.props.loan.principle,
+        rate: _this.props.loan.rate,
+        term: _this.props.loan.term,
+        payment: _this.props.loan.payment(),
+        cost: _this.props.loan.cost(),
+        currentLoan: _this.props.loan
+      };
+    } else {
+      _this.state = {
+        title: '',
+        principle: 0.00,
+        rate: 0.00,
+        term: 0,
+        payment: 0,
+        cost: 0,
+        currentLoan: false
+      };
+    }
+
+    return _this;
   }
 
   _createClass(LoanForm, [{
@@ -33,11 +65,42 @@ function (_React$Component) {
     value: function handleSubmit(evt) {
       evt.preventDefault();
       console.log("Submit...");
+
+      if (!this.state.currentLoan) {
+        this.state.currentLoan = new Loan();
+        this.props.submitListener(this.state.currentLoan);
+      }
+
+      this.state.currentLoan.set('title', this.state.title);
+      this.state.currentLoan.set('principle', +this.state.principle);
+      this.state.currentLoan.set('rate', +this.state.rate);
+      this.state.currentLoan.set('term', +this.state.term);
+      this.setState({
+        payment: this.state.currentLoan.payment(),
+        cost: this.state.currentLoan.cost()
+      });
     }
   }, {
     key: "handleReset",
     value: function handleReset() {
       console.log("Ya clicked da booton!");
+      this.setState({
+        title: '',
+        principle: 0.00,
+        rate: 0.00,
+        term: 0,
+        payment: 0,
+        cost: 0,
+        currentLoan: false
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(evt) {
+      console.log("YAAAAA changed ".concat(evt.target.id));
+      var obj = {};
+      obj[evt.target.getAttribute('name')] = evt.target.value;
+      this.setState(obj);
     }
   }, {
     key: "render",
@@ -48,7 +111,10 @@ function (_React$Component) {
         type: "text",
         className: "form-control",
         id: "loan-title",
-        placeholder: "title"
+        placeholder: "title",
+        name: "title",
+        value: this.state.title,
+        onChange: this.handleChange
       })), React.createElement("div", {
         className: "input-group"
       }, React.createElement("span", {
@@ -58,8 +124,11 @@ function (_React$Component) {
         className: "form-control",
         id: "loan-principal",
         placeholder: "principal",
+        name: "principle",
         "aria-label": "Amount (to the nearest dollar)",
-        step: "1"
+        step: "1",
+        value: this.state.principle,
+        onChange: this.handleChange
       }), React.createElement("span", {
         className: "input-group-addon"
       }, ".00")), React.createElement("div", {
@@ -70,7 +139,10 @@ function (_React$Component) {
         className: "form-control",
         id: "loan-rate",
         placeholder: "rate",
-        "aria-label": "Rate (as a percent)"
+        name: "rate",
+        "aria-label": "Rate (as a percent)",
+        value: this.state.rate,
+        onChange: this.handleChange
       }), React.createElement("span", {
         className: "input-group-addon"
       }, "%")), React.createElement("div", {
@@ -79,20 +151,23 @@ function (_React$Component) {
         type: "number",
         className: "form-control",
         id: "loan-term",
-        placeholder: "term"
+        placeholder: "term",
+        name: "term",
+        value: this.state.term,
+        onChange: this.handleChange
       })), React.createElement("div", {
         className: "form-group"
       }, React.createElement("label", {
         htmlFor: "loan-payment"
-      }, "Payment"), React.createElement("span", {
+      }, "Payment:"), React.createElement("span", {
         className: "loan-payment",
         id: "loan-payment"
-      }, "$0.00"), React.createElement("label", {
+      }, " $", this.state.payment, " "), React.createElement("label", {
         htmlFor: "loan-cost"
-      }, "Cost"), React.createElement("span", {
+      }, "Cost:"), React.createElement("span", {
         className: "loan-cost  ",
         id: "loan-cost"
-      }, "$0.00")), React.createElement("button", {
+      }, " $", this.state.cost, " ")), React.createElement("button", {
         onClick: this.handleSubmit,
         type: "submit",
         className: "btn btn-default"

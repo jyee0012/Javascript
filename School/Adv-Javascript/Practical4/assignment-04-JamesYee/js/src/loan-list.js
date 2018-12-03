@@ -8,6 +8,7 @@ class LoanList extends React.Component {
     }
     handleClick(evt){
         console.log(`Click da button......${evt.target.dataset.idx}`);
+        this.props.clickLisener(evt.target.dataset.idx);
     }
     handleChange(){
         this.forceUpdate();

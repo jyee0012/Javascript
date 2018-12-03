@@ -114,7 +114,9 @@ loans.push = function (loan) {
     // push the loan onto the array
     Array.prototype.push.call(this, loan);
     // update listeners that the array has been modified
-    this.trigger('change');
+    loan.on('change', () => {
+        this.trigger('change');        
+    })
 }
 
 // set all event listeners/observers required
@@ -123,14 +125,22 @@ loans.push = function (loan) {
 // form.addEventListener('submit', handleSubmit);
 // form.querySelector('button[type=reset]').addEventListener('click', handleResetClick);
 
-loans.push(new Loan({title: 'New Loan Title 1'}));
-loans.push(new Loan({title: 'New Loan Title 2'}));
-loans.push(new Loan({title: 'New Loan Title 3'}));
+// loans.push(new Loan({title: 'New Loan Title 1'}));
+// loans.push(new Loan({title: 'New Loan Title 2'}));
+// loans.push(new Loan({title: 'New Loan Title 3'}));
+
+const loadLoan = (loanIdx) => {
+    console.log(`load the ${loanIdx} loan`);
+    ReactDOM.render(<LoanForm loan={loans[loanIdx]}/>, formRenderDom);
+}
+const addLoan = (loan) => {
+    loans.push(loan);
+}
 
 window.loans = loans;
 window.Loan = Loan;
 
 let listRenderDOM = document.querySelector('.loan-display');
-ReactDOM.render(<LoanList loans={loans}/>,listRenderDOM);
+ReactDOM.render(<LoanList loans={loans} clickListener={loadLoan}/>,listRenderDOM);
 let formRenderDOM = document.querySelector('.loan-control');
-ReactDOM.render(<LoanForm/>,formRenderDOM);
+ReactDOM.render(<LoanForm submitListener={addLoan}/>,formRenderDOM);
