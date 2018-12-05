@@ -12,22 +12,24 @@ class LoanForm extends React.Component {
         if (this.props.loan){
             this.state = {
                 title: this.props.loan.title,
-                principle: this.props.loan.principle,
-                rate: this.props.loan.rate,
+                principal: this.props.loan.principal,
+                rate: this.props.loan.rate * 100,
                 term: this.props.loan.term,
                 payment: this.props.loan.payment(),
                 cost: this.props.loan.cost(),
-                currentLoan: this.props.loan
+                currentLoan: this.props.loan,
+                addText: "Update"
             }
         }else{
             this.state = {
                 title: '',
-                principle: 0.00,
+                principal: 0.00,
                 rate: 0.00,
                 term: 0,
                 payment: 0,
                 cost: 0,
-                currentLoan: false
+                currentLoan: false,
+                addText: "Add"
             }
         }
     }
@@ -39,25 +41,27 @@ class LoanForm extends React.Component {
             this.props.submitListener(this.state.currentLoan);
         }
         this.state.currentLoan.set('title', this.state.title);
-        this.state.currentLoan.set('principle', +this.state.principle);
-        this.state.currentLoan.set('rate', +this.state.rate);
+        this.state.currentLoan.set('principal', +this.state.principal);
+        this.state.currentLoan.set('rate', +this.state.rate / 100);
         this.state.currentLoan.set('term', +this.state.term);
         this.setState({
             payment: this.state.currentLoan.payment(),
-            cost: this.state.currentLoan.cost()
+            cost: this.state.currentLoan.cost(),
+            addText: "Update"
         })
     }
     handleReset(){
-        console.log(`Ya clicked da booton!`);
+        console.log(`Ya clicked da reset booton!`);
         
         this.setState({
             title: '',
-            principle: 0.00,
+            principal: 0.00,
             rate: 0.00,
             term: 0,
             payment: 0,
             cost: 0,
-            currentLoan: false
+            currentLoan: false,
+            addText: "Add"
         })
     }
     handleChange(evt){
@@ -65,6 +69,20 @@ class LoanForm extends React.Component {
         let obj = {};
         obj[evt.target.getAttribute('name')] = evt.target.value;
         this.setState(obj);
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.loan){
+            this.setState({
+                title: nextProps.loan.title,
+                principal: nextProps.loan.principal,
+                rate: nextProps.loan.rate * 100,
+                term: nextProps.loan.term,
+                payment: nextProps.loan.payment(),
+                cost: nextProps.loan.cost(),
+                currentLoan: nextProps.loan,
+                addText: "Update"
+            });
+        }
     }
     render() {
         return(
@@ -76,7 +94,7 @@ class LoanForm extends React.Component {
                     </div>
                     <div className="input-group">
                         <span className="input-group-addon">$</span>
-                        <input type="number" className="form-control" id="loan-principal" placeholder="principal" name="principle" aria-label="Amount (to the nearest dollar)" step="1" value={this.state.principle} onChange={this.handleChange}/>
+                        <input type="number" className="form-control" id="loan-principal" placeholder="principal" name="principal" aria-label="Amount (to the nearest dollar)" step="1" value={this.state.principal} onChange={this.handleChange}/>
                         <span className="input-group-addon">.00</span>
                     </div>
                     <div className="input-group">
@@ -92,7 +110,8 @@ class LoanForm extends React.Component {
                         <label htmlFor="loan-cost">Cost:</label>
                         <span className="loan-cost  " id="loan-cost"> ${this.state.cost} </span>
                     </div>
-                    <button onClick={this.handleSubmit} type="submit"className="btn btn-default">Add</button>
+                    <button onClick={this.handleSubmit} type="submit"className="btn btn-default">{this.state.addText}</button>
+                    <span>  </span>
                     <button onClick={this.handleReset} type="reset" className="btn btn-info">Clear</button>
                 </form>
             </div>

@@ -38,22 +38,24 @@ function (_React$Component) {
     if (_this.props.loan) {
       _this.state = {
         title: _this.props.loan.title,
-        principle: _this.props.loan.principle,
-        rate: _this.props.loan.rate,
+        principal: _this.props.loan.principal,
+        rate: _this.props.loan.rate * 100,
         term: _this.props.loan.term,
         payment: _this.props.loan.payment(),
         cost: _this.props.loan.cost(),
-        currentLoan: _this.props.loan
+        currentLoan: _this.props.loan,
+        addText: "Update"
       };
     } else {
       _this.state = {
         title: '',
-        principle: 0.00,
+        principal: 0.00,
         rate: 0.00,
         term: 0,
         payment: 0,
         cost: 0,
-        currentLoan: false
+        currentLoan: false,
+        addText: "Add"
       };
     }
 
@@ -72,26 +74,28 @@ function (_React$Component) {
       }
 
       this.state.currentLoan.set('title', this.state.title);
-      this.state.currentLoan.set('principle', +this.state.principle);
-      this.state.currentLoan.set('rate', +this.state.rate);
+      this.state.currentLoan.set('principal', +this.state.principal);
+      this.state.currentLoan.set('rate', +this.state.rate / 100);
       this.state.currentLoan.set('term', +this.state.term);
       this.setState({
         payment: this.state.currentLoan.payment(),
-        cost: this.state.currentLoan.cost()
+        cost: this.state.currentLoan.cost(),
+        addText: "Update"
       });
     }
   }, {
     key: "handleReset",
     value: function handleReset() {
-      console.log("Ya clicked da booton!");
+      console.log("Ya clicked da reset booton!");
       this.setState({
         title: '',
-        principle: 0.00,
+        principal: 0.00,
         rate: 0.00,
         term: 0,
         payment: 0,
         cost: 0,
-        currentLoan: false
+        currentLoan: false,
+        addText: "Add"
       });
     }
   }, {
@@ -101,6 +105,22 @@ function (_React$Component) {
       var obj = {};
       obj[evt.target.getAttribute('name')] = evt.target.value;
       this.setState(obj);
+    }
+  }, {
+    key: "componentWillReceiveProps",
+    value: function componentWillReceiveProps(nextProps) {
+      if (nextProps.loan) {
+        this.setState({
+          title: nextProps.loan.title,
+          principal: nextProps.loan.principal,
+          rate: nextProps.loan.rate * 100,
+          term: nextProps.loan.term,
+          payment: nextProps.loan.payment(),
+          cost: nextProps.loan.cost(),
+          currentLoan: nextProps.loan,
+          addText: "Update"
+        });
+      }
     }
   }, {
     key: "render",
@@ -124,10 +144,10 @@ function (_React$Component) {
         className: "form-control",
         id: "loan-principal",
         placeholder: "principal",
-        name: "principle",
+        name: "principal",
         "aria-label": "Amount (to the nearest dollar)",
         step: "1",
-        value: this.state.principle,
+        value: this.state.principal,
         onChange: this.handleChange
       }), React.createElement("span", {
         className: "input-group-addon"
@@ -171,7 +191,7 @@ function (_React$Component) {
         onClick: this.handleSubmit,
         type: "submit",
         className: "btn btn-default"
-      }, "Add"), React.createElement("button", {
+      }, this.state.addText), React.createElement("span", null, "  "), React.createElement("button", {
         onClick: this.handleReset,
         type: "reset",
         className: "btn btn-info"

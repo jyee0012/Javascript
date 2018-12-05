@@ -13,94 +13,9 @@ import LoanForm from './loan-form.js';
 // an existing Loan should be updated by changing/checking the current innerHTML of the button
 // (e.g. display Add to create and Save to make changes)
 
-let form = document.querySelector('.loan-control>form'), // form access via
-    list = document.querySelector('.loan-display>.list-group'), // list access via
-    loans = [], // array to store Loan objects
-    currentLoan, // reference to the currently displayed loan
-    prop, // used to mixin observer support into loans array
+let loans = [], // array to store Loan objects
+    prop; // used to mixin observer support into loans array
 
-    // form submit handler
-    handleSubmit = (e) => {
-        let loan;
-
-        // determine if the form is displaying new or existing loan details
-        if (!currentLoan) {
-            // new loan, create a new Loan and add to the loans array
-
-            // TODO: perform form validation before continuing
-            currentLoan = new Loan({
-                title: form.querySelector('#loan-title').value,
-                principal: +form.querySelector('#loan-principal').value,
-                rate: +form.querySelector('#loan-rate').value / 100, // convert to percentage
-                term: +form.querySelector('#loan-term').value
-            });
-
-            // display the payment
-            form.querySelector('#loan-payment').innerHTML = `$${currentLoan.payment()}`;
-
-            // display the cost
-            form.querySelector('#loan-cost').innerHTML = `$${currentLoan.cost()}`;
-
-            // the loans list should update its display whenever a loan is changed
-            currentLoan.on('change', renderLoansList);
-
-            // add the loan to the list, which should also trigger the 'change' event
-            loans.push(currentLoan);
-
-            // currently in edit mode
-            form.querySelector('button[type=submit]').innerHTML = 'Save';
-
-        } else {
-            // existing loan, populate the form
-
-            // TODO: perform form validation before continuing
-            currentLoan.set('title', form.querySelector('#loan-title').value);
-            currentLoan.set('principal', +form.querySelector('#loan-principal').value);
-            currentLoan.set('rate', +form.querySelector('#loan-rate').value / 100);
-            currentLoan.set('term', +form.querySelector('#loan-term').value);
-
-            // display the payment & cost
-            form.querySelector('#loan-payment').innerHTML = `$${currentLoan.payment()}`;
-            form.querySelector('#loan-cost').innerHTML = `$${currentLoan.cost()}`;
-
-        }
-
-        e.preventDefault();
-    },
-
-    // reset the form and clear the currentLoan, if any
-    handleResetClick = (e) => {
-        currentLoan = undefined;
-        form.querySelector('#loan-payment').innerHTML = '$0.00';
-        form.querySelector('button[type=submit]').innerHTML = 'Add';
-    },
-
-    // list click handler
-    handleListClick = (e) => {
-        if (e.target.tagName === 'BUTTON') {
-            // set the current loan and display in form 
-            currentLoan = loans[e.target.dataset.idx];
-
-            // populate the form
-            form.querySelector('#loan-title').value = currentLoan.get('title');
-            form.querySelector('#loan-principal').value = currentLoan.get('principal');
-            form.querySelector('#loan-rate').value = currentLoan.get('rate') * 100;
-            form.querySelector('#loan-term').value = currentLoan.get('term');
-
-            // display the payment & cost
-            form.querySelector('#loan-payment').innerHTML = `$${currentLoan.payment()}`;
-            form.querySelector('#loan-cost').innerHTML = `$${currentLoan.cost()}`;
-
-            // update the submit button
-            form.querySelector('button[type=submit]').innerHTML = 'Save';
-        }
-    },
-
-    // render the list
-    renderLoansList = () => {
-        // use Handlebars to render the loans
-        list.innerHTML = Handlebars.templates.loans({loans: loans});
-    };
 
 // add observable support to the loans array
 for (let prop in Events.prototype) {
@@ -119,26 +34,17 @@ loans.push = function (loan) {
     })
 }
 
-// set all event listeners/observers required
-// loans.on('change', renderLoansList);
-// list.addEventListener('click', handleListClick);
-// form.addEventListener('submit', handleSubmit);
-// form.querySelector('button[type=reset]').addEventListener('click', handleResetClick);
 
-// loans.push(new Loan({title: 'New Loan Title 1'}));
-// loans.push(new Loan({title: 'New Loan Title 2'}));
-// loans.push(new Loan({title: 'New Loan Title 3'}));
-
-const loadLoan = (loanIdx) => {
-    console.log(`load the ${loanIdx} loan`);
-    ReactDOM.render(<LoanForm loan={loans[loanIdx]}/>, formRenderDom);
-}
 const addLoan = (loan) => {
     loans.push(loan);
 }
+const loadLoan = (loanIdx) => {
+    console.log(`load the ${loanIdx} loan`);
+    ReactDOM.render(<LoanForm loan={loans[loanIdx]} submitListener={addLoan}/>, formRenderDOM);
+}
 
-window.loans = loans;
-window.Loan = Loan;
+// window.loans = loans;
+// window.Loan = Loan;
 
 let listRenderDOM = document.querySelector('.loan-display');
 ReactDOM.render(<LoanList loans={loans} clickListener={loadLoan}/>,listRenderDOM);
