@@ -42,7 +42,11 @@ const loadLoan = (loanIdx) => {
     console.log(`load the ${loanIdx} loan`);
     ReactDOM.render(<LoanForm loan={loans[loanIdx]} submitListener={addLoan}/>, formRenderDOM);
 }
-
+const App = () => {
+    return render(
+        <div>You say "What?!"</div>
+    );
+}
 // window.loans = loans;
 // window.Loan = Loan;
 

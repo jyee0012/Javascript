@@ -34,8 +34,7 @@
       ],
       [
         "@babel/preset-react",
-        {
-        }
+        {}
       ]
     ]
   }
