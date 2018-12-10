@@ -1,0 +1,21 @@
+[
+    {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "avatar": "jdoe.jpg",
+        "email": "jdoe@example.com"
+    },
+    {
+        "firstName": "Sally",
+        "lastName": "Anne",
+        "avatar": "sanne.jpg",
+        "email": "sanne@example.com"
+    },
+    {
+        "firstName": "Tom",
+        "lastName": "Gerry",
+        "avatar": "tgerry.jpg",
+        "email": "tgerry@example.com"
+    }
+
+]
