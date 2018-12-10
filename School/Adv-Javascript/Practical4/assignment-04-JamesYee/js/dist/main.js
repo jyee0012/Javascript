@@ -66,43 +66,28 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
       loans: [],
-      currentLoan: new Loan()
-    };
-    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+      currentLoan: null
+    }; // this.handleChange = this.handleChange.bind(this);
+
     _this.handleLoad = _this.handleLoad.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleAdd = _this.handleAdd.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-
-    for (var prop in Events.prototype) {
-      loans[prop] = Events.prototype[prop];
-    }
-
     return _this;
   }
 
   _createClass(App, [{
-    key: "handleChange",
-    value: function handleChange() {
-      this.forceUpdate();
-    }
-  }, {
     key: "handleLoad",
     value: function handleLoad(loanIdx) {
-      // finish
       this.state.currentLoan = this.state.loans[loanIdx];
+      this.forceUpdate();
     }
   }, {
     key: "handleAdd",
     value: function handleAdd(loan) {
-      // finish
-      console.log(loan);
-      console.log(this.state.loans); // this.state.loans.push = function (loan) {
-      //     loan.set('idx', this.length);
-      //     Array.prototype.push.call(this, loan);
-      //     loan.on('change', () => {
-      //         this.trigger('change');        
-      //     })
-      // }
-      // this.state.loans.push(loan);
+      // console.log(loan);
+      // console.log(this.state.loans);
+      loan.set('idx', this.state.loans.length);
+      Array.prototype.push.call(this.state.loans, loan);
+      this.forceUpdate();
     }
   }, {
     key: "render",

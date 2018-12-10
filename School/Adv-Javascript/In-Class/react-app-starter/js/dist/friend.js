@@ -1,4 +1,6 @@
+import React from 'react';
 'use strict'; // use an object literal for embedded styling
+
 
 var friendStyles = {
   padding: '10px',

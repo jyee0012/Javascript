@@ -47,34 +47,22 @@ class App extends React.Component {
         super(props);
         this.state = {
             loans: [],
-            currentLoan: new Loan()
+            currentLoan: null
         };
-        this.handleChange = this.handleChange.bind(this);
+        // this.handleChange = this.handleChange.bind(this);
         this.handleLoad = this.handleLoad.bind(this);
         this.handleAdd = this.handleAdd.bind(this);
-        for (let prop in Events.prototype) {
-            loans[prop] = Events.prototype[prop];
-        }
-    }
-    handleChange() {
-        this.forceUpdate();
     }
     handleLoad (loanIdx) {
-        // finish
         this.state.currentLoan = this.state.loans[loanIdx]; 
+        this.forceUpdate();
     }
     handleAdd (loan) {
-        // finish
-        console.log(loan);
-        console.log(this.state.loans);
-        // this.state.loans.push = function (loan) {
-        //     loan.set('idx', this.length);
-        //     Array.prototype.push.call(this, loan);
-        //     loan.on('change', () => {
-        //         this.trigger('change');        
-        //     })
-        // }
-        // this.state.loans.push(loan);
+        // console.log(loan);
+        // console.log(this.state.loans);
+        loan.set('idx', this.state.loans.length);
+        Array.prototype.push.call(this.state.loans, loan);
+        this.forceUpdate();
     };
     render() {
         

@@ -14,7 +14,7 @@ class LoanList extends React.Component {
         this.forceUpdate();
     }
     componentDidMount() {
-        this.props.loans.on('change', this.handleChange);
+        // this.props.loans.on('change', this.handleChange);
     }
 
     render(loan) {

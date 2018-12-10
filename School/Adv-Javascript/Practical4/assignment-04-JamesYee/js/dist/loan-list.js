@@ -46,8 +46,7 @@ function (_React$Component) {
     }
   }, {
     key: "componentDidMount",
-    value: function componentDidMount() {
-      this.props.loans.on('change', this.handleChange);
+    value: function componentDidMount() {// this.props.loans.on('change', this.handleChange);
     }
   }, {
     key: "render",
